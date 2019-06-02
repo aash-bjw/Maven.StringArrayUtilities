@@ -1,5 +1,7 @@
 package com.zipcodewilmington;
 
+import java.util.ArrayList;
+
 /**
  * Created by leon on 1/29/18.
  */
@@ -9,6 +11,7 @@ public class StringArrayUtils {
      * @return first element of specified array
      */ // TODO
     public static String getFirstElement(String[] array) {
+
         return array[0];
     }
 
@@ -17,6 +20,7 @@ public class StringArrayUtils {
      * @return second element in specified array
      */
     public static String getSecondElement(String[] array) {
+
         return array[1];
     }
 
@@ -25,7 +29,8 @@ public class StringArrayUtils {
      * @return last element in specified array
      */ // TODO
     public static String getLastElement(String[] array) {
-        return null;
+
+        return array[array.length - 1];
     }
 
     /**
@@ -33,7 +38,8 @@ public class StringArrayUtils {
      * @return second to last element in specified array
      */ // TODO
     public static String getSecondToLastElement(String[] array) {
-        return null;
+
+        return array[array.length - 2];
     }
 
     /**
@@ -42,7 +48,13 @@ public class StringArrayUtils {
      * @return true if the array contains the specified `value`
      */ // TODO
     public static boolean contains(String[] array, String value) {
-        return false;
+        boolean flag = false;
+        for (String string : array) {
+            if (value.equals(string)) {
+                flag = true;
+            }
+        }
+        return flag;
     }
 
     /**
@@ -50,7 +62,13 @@ public class StringArrayUtils {
      * @return an array with identical contents in reverse order
      */ // TODO
     public static String[] reverse(String[] array) {
-        return null;
+        String[] outcome = new String[array.length];
+        int counter = 0;
+        for (int i = array.length - 1; i >= 0; i--) {
+            outcome[counter] = array[i];
+            counter++;
+        }
+        return outcome;
     }
 
     /**
@@ -75,7 +93,15 @@ public class StringArrayUtils {
      * @return number of occurrences the specified `value` has occurred
      */ // TODO
     public static int getNumberOfOccurrences(String[] array, String value) {
-        return 0;
+
+        int counter = 0;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equals(value)) {
+                counter++;
+            }
+        }
+
+        return counter;
     }
 
     /**
@@ -84,7 +110,15 @@ public class StringArrayUtils {
      * @return array with identical contents excluding values of `value`
      */ // TODO
     public static String[] removeValue(String[] array, String valueToRemove) {
-        return null;
+        String[] result = new String[array.length - getNumberOfOccurrences(array, valueToRemove)];
+        int counter = 0;
+        for (String string : array) {
+            if (!valueToRemove.equals(string)) {
+                result[counter] = string;
+                counter++;
+            }
+        }
+        return result;
     }
 
     /**
@@ -92,7 +126,14 @@ public class StringArrayUtils {
      * @return array of Strings with consecutive duplicates removes
      */ // TODO
     public static String[] removeConsecutiveDuplicates(String[] array) {
-        return null;
+        ArrayList<String> stringList = new ArrayList<>();
+        stringList.add(array[0]);
+        for (int i = 1; i < array.length; i++) {
+            if (!array[i].equals(array[i - 1])) {
+                stringList.add(array[i]);
+            }
+        }
+        return stringList.toArray(new String[0]);
     }
 
     /**
@@ -100,8 +141,32 @@ public class StringArrayUtils {
      * @return array of Strings with each consecutive duplicate occurrence concatenated as a single string in an array of Strings
      */ // TODO
     public static String[] packConsecutiveDuplicates(String[] array) {
-        return null;
+        ArrayList<String> stringList = new ArrayList<>();
+        for (int i = 0; i < array.length - 1; i++) {
+            if (array[i].equals(array[i + 1])) {
+                String s = buildDuplicatesIntoSting(array, i);
+                stringList.add(s);
+                //skip index
+            }
+
+            //else statement
+
+        }
+            return stringList.toArray(new String[0]);
     }
 
+        public static String buildDuplicatesIntoSting(String[] array, int x) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(array[x]);
+            for (int i = x+1; i < array.length - 1; i++) {
+                if (array[i].equals(array[i - 1])) {
+                sb.append(array[x]);
+                }
+                else{
+                    break;
+                }
+            }
+            return sb.toString();
+        }
 
 }
