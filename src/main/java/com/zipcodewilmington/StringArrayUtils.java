@@ -1,6 +1,7 @@
 package com.zipcodewilmington;
 
 import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Created by leon on 1/29/18.
@@ -76,7 +77,14 @@ public class StringArrayUtils {
      * @return true if the order of the array is the same backwards and forwards
      */ // TODO
     public static boolean isPalindromic(String[] array) {
-        return false;
+
+        for (int i = 0; i < array.length; i++) {
+            if (!array[i].equals(array[array.length - i - 1])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -84,7 +92,13 @@ public class StringArrayUtils {
      * @return true if each letter in the alphabet has been used in the array
      */ // TODO
     public static boolean isPangramic(String[] array) {
-        return false;
+
+        String alpha = Arrays.toString(array).toLowerCase();
+        for (char letter = 'a'; letter <= 'z'; letter++) {
+            if (alpha.indexOf(letter) < 0) return false;
+        }
+
+        return true;
     }
 
     /**
@@ -142,31 +156,24 @@ public class StringArrayUtils {
      */ // TODO
     public static String[] packConsecutiveDuplicates(String[] array) {
         ArrayList<String> stringList = new ArrayList<>();
-        for (int i = 0; i < array.length - 1; i++) {
-            if (array[i].equals(array[i + 1])) {
-                String s = buildDuplicatesIntoSting(array, i);
-                stringList.add(s);
-                //skip index
+
+        stringList.add(array[0]);
+        String last = array[0];
+
+
+        for (int i = 1; i < array.length; i++) {
+
+            String nextWord = array[i];
+
+            if (nextWord.equals(last)) {
+                stringList.set(stringList.size() - 1, stringList.get(stringList.size() - 1) + nextWord);
+            } else {
+                stringList.add(nextWord);
+                last = nextWord;
+
+
             }
-
-            //else statement
-
         }
-            return stringList.toArray(new String[0]);
+        return stringList.toArray(new String[stringList.size()-1]);
     }
-
-        public static String buildDuplicatesIntoSting(String[] array, int x) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(array[x]);
-            for (int i = x+1; i < array.length - 1; i++) {
-                if (array[i].equals(array[i - 1])) {
-                sb.append(array[x]);
-                }
-                else{
-                    break;
-                }
-            }
-            return sb.toString();
-        }
-
 }
